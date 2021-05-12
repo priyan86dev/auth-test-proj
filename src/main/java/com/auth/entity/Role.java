@@ -1,11 +1,18 @@
 package com.auth.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +25,10 @@ public class Role {
 
 	@Enumerated(EnumType.STRING)
 	private Roles name;
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+	private Set<Permission> permission = new HashSet<>();
 
 	public Role() {
 
@@ -41,6 +52,14 @@ public class Role {
 
 	public void setName(Roles name) {
 		this.name = name;
+	}
+
+	public Set<Permission> getPermission() {
+		return permission;
+	}
+
+	public void setPermission(Set<Permission> permission) {
+		this.permission = permission;
 	}
 
 }

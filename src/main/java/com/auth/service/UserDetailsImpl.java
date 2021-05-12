@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.auth.entity.Permission;
+import com.auth.entity.Role;
 import com.auth.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,6 +42,14 @@ public class UserDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
+//		System.out.println("Testing *****");
+//		for (Role role : user.getRoles()) {
+//			for (Permission permission : role.getPermission()) {
+//				System.out.println(permission.getPname());
+//			}
+//		}
+//		System.out.println("*************");
+
 		return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
 	}
 
@@ -52,15 +62,9 @@ public class UserDetailsImpl implements UserDetails {
 		return id;
 	}
 
-	
-	
 	public String getEmail() {
 		return email;
 	}
-
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
 
 	@Override
 	public String getPassword() {

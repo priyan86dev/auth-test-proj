@@ -10,6 +10,7 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private List<String> roles;
+//	private List<String> permissions;
 
 	public JwtResponse(String token, int id, String username, String email, List<String> roles) {
 		this.token = token;
@@ -17,6 +18,7 @@ public class JwtResponse {
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+//		this.permissions=permissions;
 	}
 
 	public String getToken() {
@@ -66,5 +68,15 @@ public class JwtResponse {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
+
+//	public List<String> getPermissions() {
+//		return permissions;
+//	}
+//
+//	public void setPermissions(List<String> permissions) {
+//		this.permissions = permissions;
+//	}
+	
+	
 
 }

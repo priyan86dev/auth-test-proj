@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.auth.entity.Permission;
 import com.auth.entity.Role;
 import com.auth.entity.Roles;
 
@@ -12,4 +13,6 @@ import com.auth.entity.Roles;
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
 	Optional<Role> findByName(Roles roles);
+	
+//	Optional<Permission> findByPname(Permission permissions);
 }

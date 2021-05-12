@@ -63,8 +63,9 @@ public class AuthController {
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
+		
 		return ResponseEntity.ok(
-				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles ));
 	}
 
 	@PostMapping("/signup")
@@ -81,21 +82,28 @@ public class AuthController {
 		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
 				encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRoles = signUpRequest.getRole();
+		Set<Role> roles = assiginingRoles(signUpRequest.getRole());
+		user.setRoles(roles);
+		userRepository.save(user);
+
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+
+	// controller helper
+	private Set<Role> assiginingRoles(Set<String> stringRoles) {
 		Set<Role> roles = new HashSet<>();
 
-		if (strRoles == null) {
+		if (stringRoles == null) {
 			Role userRole = roleRepository.findByName(Roles.ROLE_USER)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(userRole);
 		} else {
-			strRoles.forEach(role -> {
+			stringRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
 					Role adminRole = roleRepository.findByName(Roles.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(adminRole);
-
 					break;
 
 				default:
@@ -105,10 +113,6 @@ public class AuthController {
 				}
 			});
 		}
-
-		user.setRoles(roles);
-		userRepository.save(user);
-
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return roles;
 	}
 }
