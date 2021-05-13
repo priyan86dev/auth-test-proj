@@ -3,6 +3,7 @@ package com.auth.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -42,13 +43,8 @@ public class UserDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-//		System.out.println("Testing *****");
-//		for (Role role : user.getRoles()) {
-//			for (Permission permission : role.getPermission()) {
-//				System.out.println(permission.getPname());
-//			}
-//		}
-//		System.out.println("*************");
+	Set<Role> roles = user.getRoles();
+	roles.forEach(role-> role.getPermission().stream().map(Permission::getPname).collect(Collectors.toList()));
 
 		return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
 	}
