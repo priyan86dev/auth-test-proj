@@ -22,10 +22,6 @@
 //	public Permission() {
 //	}
 //
-//	public Permission(Permissions pname) {
-//		this.pname = pname;
-//	}
-//
 //	public int getPerm_id() {
 //		return perm_id;
 //	}
@@ -41,7 +37,5 @@
 //	public void setPname(Permissions pname) {
 //		this.pname = pname;
 //	}
-//
-//	
 //
 //}

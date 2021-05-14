@@ -27,16 +27,11 @@ public class TestController {
 	public String adminAccess() {
 		return "Admin Board.";
 	}
-	
+
 	@GetMapping("/create")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String createNew() {
 		return "New Record Created";
 	}
-	
-	@GetMapping("/read")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-	public String readNew() {
-		return "New Record Created";
-	}
+
 }

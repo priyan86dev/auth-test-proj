@@ -1,6 +1,7 @@
 package com.auth.service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -42,6 +43,18 @@ public class UserDetailsImpl implements UserDetails {
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+
+//		Set<Role> roles = user.getRoles();
+//		Set<Permission> permissions = new HashSet<>();
+//		for (Role role : roles) {
+//			for (Permission permission : role.getPermission()) {
+//				permissions.add(permission);
+//			}
+//		}
+//
+//		List<GrantedAuthority> authorities = permissions.stream()
+//				.map(permission -> new SimpleGrantedAuthority(permission.getPname().name()))
+//				.collect(Collectors.toList());
 
 		return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
 	}
